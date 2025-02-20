@@ -14,5 +14,5 @@ public class Lancamento {
     private String dataPagamento;
     private Double valor;
     private String observacao;
-    private TipoLancamento tipo;
+    private TipoLancamento tipo; // Comentario
 }
