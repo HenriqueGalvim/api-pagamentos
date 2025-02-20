@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Categoria {
     private Long codigo;
-    private String nome;
+    private String nome; //Testando
 }
