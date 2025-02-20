@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class Pessoa {
     private Long codigo;
     private String nome;
-    private Boolean ativo;
+    private Boolean ativo; // Teste
 }
