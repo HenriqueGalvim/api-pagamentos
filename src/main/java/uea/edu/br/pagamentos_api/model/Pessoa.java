@@ -1,14 +1,29 @@
 package uea.edu.br.pagamentos_api.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
+@Table(name = "pessoa")
 public class Pessoa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long codigo;
+
+    @NotNull
+    @Size(min = 3, max = 50)
     private String nome;
-    private Boolean ativo; // Teste
+
+    @NotNull
+    private Boolean ativo;
+
+    @Embedded
+    private Endereco endereco;
 }
