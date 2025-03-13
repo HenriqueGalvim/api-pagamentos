@@ -1,7 +1,6 @@
 package uea.edu.br.pagamentos_api.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
