@@ -97,16 +97,26 @@ public class PessoaService {
         return toDTO(updatedPessoa);
     }
 
-    @Transactional
     public void deletarPessoa(Long codigo) {
         if (!pessoaRepository.existsById(codigo)) {
             throw new RecursoNaoEncontradoException("Pessoa não encontrada");
         }
         try {
             pessoaRepository.deleteById(codigo);
-        } catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException ex) {
             throw new RecursoEmUsoException("Pessoa em uso e não pode ser removida");
         }
+    }
 
+    public PessoaDTO atualizarStatus(Long codigo, Boolean ativo) {
+        Pessoa pessoaExistente = pessoaRepository.findById(codigo)
+                .orElseThrow(() -> new RecursoNaoEncontradoException("Pessoa não encontrada"));
+    
+        if (pessoaExistente.getAtivo() != null && pessoaExistente.getAtivo().equals(ativo)) {
+            throw new IllegalArgumentException("O status 'ativo' já está definido como " + ativo + ".");
+        }
+        pessoaExistente.setAtivo(ativo);
+        Pessoa pessoaAtualizada = pessoaRepository.save(pessoaExistente);
+        return toDTO(pessoaAtualizada);
     }
 }
