@@ -3,6 +3,8 @@ package uea.edu.br.pagamentos_api.controller;
 import java.net.URI;
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import uea.edu.br.pagamentos_api.dto.LancamentoDTO;
+import uea.edu.br.pagamentos_api.dto.LancamentoFilterDTO;
+import uea.edu.br.pagamentos_api.dto.ResumoLancamentoDTO;
 import uea.edu.br.pagamentos_api.service.LancamentoService;
 
 @RestController
@@ -29,11 +33,15 @@ public class LancamentoController {
 
     // GET /lancamentos
     @GetMapping
-    public ResponseEntity<List<LancamentoDTO>> listarLancamentos() {
-        List<LancamentoDTO> lancamentos = lancamentoService.listarLancamentos();
-        if (lancamentos.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
+    public ResponseEntity<Page<LancamentoDTO>> pesquisar(LancamentoFilterDTO lancamentoFilter, Pageable pageable) {
+        Page<LancamentoDTO> lancamentos = lancamentoService.pesquisar(lancamentoFilter, pageable);
+        return ResponseEntity.ok(lancamentos);
+    }
+
+    // GET /lancamentos/resumo
+    @GetMapping("/resumo")
+    public ResponseEntity<Page<ResumoLancamentoDTO>> resumir(LancamentoFilterDTO lancamentoFilter, Pageable pageable) {
+        Page<ResumoLancamentoDTO> lancamentos = lancamentoService.resumir(lancamentoFilter, pageable);
         return ResponseEntity.ok(lancamentos);
     }
 
